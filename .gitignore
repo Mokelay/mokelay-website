@@ -1,0 +1,11 @@
+.nuxt
+.output
+node_modules
+dist
+coverage
+test-results
+playwright-report
+.env
+.env.*
+!.env.example
+server/database/migrations/meta
