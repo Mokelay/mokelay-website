@@ -12,6 +12,9 @@ const { copy } = useAppSettings()
         <div class="hero-actions">
           <NuxtLink class="button button-primary" to="/register">{{ copy.home.hero.primary }}</NuxtLink>
           <NuxtLink class="button button-secondary" to="/pricing">{{ copy.home.hero.secondary }}</NuxtLink>
+          <a class="button button-accent" href="https://editor.mokelay.com/" rel="noopener noreferrer">
+            {{ copy.home.hero.tryEditor }}
+          </a>
         </div>
         <div class="hero-proof" :aria-label="copy.home.hero.proofLabel">
           <span v-for="item in copy.home.hero.proof" :key="item">{{ item }}</span>

@@ -53,6 +53,9 @@ onMounted(() => {
           </button>
         </div>
 
+        <a class="button button-secondary" href="https://editor.mokelay.com/" rel="noopener noreferrer">
+          {{ copy.nav.tryEditor }}
+        </a>
         <NuxtLink v-if="loggedIn" class="button button-secondary" to="/dashboard">{{ copy.nav.dashboard }}</NuxtLink>
         <template v-else>
           <NuxtLink class="login-link" to="/login">{{ copy.nav.login }}</NuxtLink>

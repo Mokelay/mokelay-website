@@ -35,7 +35,12 @@ useSeoMeta({
           <p class="eyebrow">{{ copy.home.finalCta.eyebrow }}</p>
           <h2>{{ copy.home.finalCta.title }}</h2>
         </div>
-        <NuxtLink class="button button-accent" to="/register">{{ copy.home.finalCta.cta }}</NuxtLink>
+        <div class="final-actions">
+          <NuxtLink class="button button-accent" to="/register">{{ copy.home.finalCta.cta }}</NuxtLink>
+          <a class="button button-secondary" href="https://editor.mokelay.com/" rel="noopener noreferrer">
+            {{ copy.home.finalCta.tryEditor }}
+          </a>
+        </div>
       </div>
     </section>
   </div>
@@ -61,6 +66,12 @@ useSeoMeta({
   font-size: clamp(2rem, 5vw, 4rem);
   line-height: 0.96;
   letter-spacing: -0.06em;
+}
+
+.final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 @media (max-width: 720px) {
