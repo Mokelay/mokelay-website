@@ -1,33 +1,62 @@
 <script setup lang="ts">
 const { loggedIn } = useUserSession()
+const { copy, locale, localeLabel, theme, themeLabel, toggleLocale, toggleTheme } = useAppSettings()
+const ready = ref(false)
 
-const links = [
-  { label: '产品', to: '/#features' },
-  { label: '工作流', to: '/#workflow' },
-  { label: '价格', to: '/pricing' },
-  { label: 'FAQ', to: '/#faq' },
-]
+const links = computed(() => [
+  { label: copy.value.nav.product, to: '/#features' },
+  { label: copy.value.nav.workflow, to: '/#workflow' },
+  { label: copy.value.nav.pricing, to: '/pricing' },
+  { label: copy.value.nav.faq, to: '/#faq' },
+])
+
+onMounted(() => {
+  ready.value = true
+})
 </script>
 
 <template>
   <header class="nav-wrap">
     <nav class="container nav">
-      <NuxtLink class="brand" to="/" aria-label="Mokelay IDE 首页">
+      <NuxtLink class="brand" to="/" :aria-label="copy.common.brandHome">
         <span class="brand-mark">M</span>
         <span>Mokelay IDE</span>
       </NuxtLink>
 
-      <div class="nav-links" aria-label="主导航">
+      <div class="nav-links" :aria-label="copy.nav.main">
         <NuxtLink v-for="link in links" :key="link.to" :to="link.to">
           {{ link.label }}
         </NuxtLink>
       </div>
 
       <div class="nav-actions">
-        <NuxtLink v-if="loggedIn" class="button button-secondary" to="/dashboard">控制台</NuxtLink>
+        <div class="switchers">
+          <button
+            class="switch-button"
+            :class="{ active: locale === 'zh' }"
+            type="button"
+            :disabled="!ready"
+            :aria-label="copy.nav.language"
+            @click="toggleLocale"
+          >
+            {{ localeLabel }}
+          </button>
+          <button
+            class="switch-button"
+            :class="{ active: theme === 'light' }"
+            type="button"
+            :disabled="!ready"
+            :aria-label="copy.nav.theme"
+            @click="toggleTheme"
+          >
+            {{ themeLabel }}
+          </button>
+        </div>
+
+        <NuxtLink v-if="loggedIn" class="button button-secondary" to="/dashboard">{{ copy.nav.dashboard }}</NuxtLink>
         <template v-else>
-          <NuxtLink class="login-link" to="/login">登录</NuxtLink>
-          <NuxtLink class="button button-primary" to="/register">免费开始</NuxtLink>
+          <NuxtLink class="login-link" to="/login">{{ copy.nav.login }}</NuxtLink>
+          <NuxtLink class="button button-primary" to="/register">{{ copy.nav.register }}</NuxtLink>
         </template>
       </div>
     </nav>
@@ -50,7 +79,7 @@ const links = [
   min-height: 62px;
   border: 1px solid rgba(16, 35, 31, 0.12);
   border-radius: 999px;
-  background: rgba(255, 252, 244, 0.78);
+  background: var(--surface-strong);
   box-shadow: 0 14px 50px rgba(15, 48, 40, 0.08);
   padding: 8px 10px 8px 18px;
 }
@@ -94,6 +123,41 @@ const links = [
   gap: 14px;
 }
 
+.switchers {
+  display: flex;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--control-bg);
+  padding: 4px;
+}
+
+.switch-button {
+  min-width: 54px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 8px 10px;
+}
+
+.switch-button:hover {
+  background: var(--surface-strong);
+  color: var(--cedar-dark);
+}
+
+.switch-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.switch-button.active {
+  background: var(--moss-soft);
+}
+
 .login-link {
   color: var(--ink-soft);
   font-weight: 700;
@@ -113,6 +177,11 @@ const links = [
     gap: 14px;
     overflow-x: auto;
     padding: 4px 0;
+  }
+
+  .nav-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 }
 </style>

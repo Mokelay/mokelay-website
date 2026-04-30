@@ -6,6 +6,7 @@ const props = defineProps<{
 const route = useRoute()
 const router = useRouter()
 const { fetch: refreshSession } = useUserSession()
+const { copy } = useAppSettings()
 
 const form = reactive({
   name: '',
@@ -25,17 +26,17 @@ type RequestError = Error & {
   }
 }
 
-const title = computed(() => (props.mode === 'login' ? '欢迎回来' : '创建你的 Mokelay 工作区'))
+const title = computed(() => (props.mode === 'login' ? copy.value.auth.form.loginTitle : copy.value.auth.form.registerTitle))
 const subtitle = computed(() =>
   props.mode === 'login'
-    ? '继续进入控制台，管理你的 IDE 工作区和订阅状态。'
-    : '注册后会自动进入控制台。第一版使用内置账号体系，后续可接 OAuth 和 Stripe。',
+    ? copy.value.auth.form.loginSubtitle
+    : copy.value.auth.form.registerSubtitle,
 )
-const submitLabel = computed(() => (props.mode === 'login' ? '登录' : '注册并进入控制台'))
+const submitLabel = computed(() => (props.mode === 'login' ? copy.value.auth.form.loginSubmit : copy.value.auth.form.registerSubmit))
 const alternate = computed(() =>
   props.mode === 'login'
-    ? { text: '还没有账号？', label: '立即注册', to: '/register' }
-    : { text: '已有账号？', label: '去登录', to: '/login' },
+    ? { text: copy.value.auth.form.noAccount, label: copy.value.auth.form.goRegister, to: '/register' }
+    : { text: copy.value.auth.form.hasAccount, label: copy.value.auth.form.goLogin, to: '/login' },
 )
 
 onMounted(() => {
@@ -65,7 +66,7 @@ async function submit() {
       || requestError.data?.message
       || requestError.statusMessage
       || requestError.message
-      || '请求失败，请稍后重试。'
+      || copy.value.auth.form.fallbackError
   } finally {
     loading.value = false
   }
@@ -81,7 +82,7 @@ async function submit() {
     </div>
 
     <label v-if="mode === 'register'">
-      <span>姓名</span>
+      <span>{{ copy.auth.form.name }}</span>
       <input
         v-model="form.name"
         name="name"
@@ -93,7 +94,7 @@ async function submit() {
     </label>
 
     <label>
-      <span>邮箱</span>
+      <span>{{ copy.auth.form.email }}</span>
       <input
         v-model="form.email"
         name="email"
@@ -106,13 +107,13 @@ async function submit() {
     </label>
 
     <label>
-      <span>密码</span>
+      <span>{{ copy.auth.form.password }}</span>
       <input
         v-model="form.password"
         name="password"
         type="password"
         :autocomplete="mode === 'login' ? 'current-password' : 'new-password'"
-        placeholder="至少 8 位"
+        :placeholder="copy.auth.form.passwordPlaceholder"
         :disabled="loading || !ready"
         required
       >
@@ -126,7 +127,7 @@ async function submit() {
       :disabled="loading || !ready"
       @click="submit"
     >
-      {{ !ready ? '准备中...' : loading ? '处理中...' : submitLabel }}
+      {{ !ready ? copy.common.loading : loading ? copy.common.processing : submitLabel }}
     </button>
 
     <p class="alternate">
@@ -168,7 +169,7 @@ input {
   width: 100%;
   border: 1px solid rgba(16, 35, 31, 0.18);
   border-radius: 16px;
-  background: rgba(255, 252, 244, 0.78);
+  background: var(--surface-strong);
   color: var(--ink);
   outline: none;
   padding: 15px 16px;

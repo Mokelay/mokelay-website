@@ -1,21 +1,20 @@
+<script setup lang="ts">
+const { copy } = useAppSettings()
+</script>
+
 <template>
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">AI-native IDE for builders</p>
-        <h1>把 Codex 式协作装进你的 IDE 工作台。</h1>
-        <p class="lead">
-          Mokelay IDE 帮个人开发者和小团队从产品想法一路走到代码、测试和上线。不是再开一个聊天窗口，
-          而是让 AI 直接理解项目、任务和交付边界。
-        </p>
+        <p class="eyebrow">{{ copy.home.hero.eyebrow }}</p>
+        <h1>{{ copy.home.hero.title }}</h1>
+        <p class="lead">{{ copy.home.hero.lead }}</p>
         <div class="hero-actions">
-          <NuxtLink class="button button-primary" to="/register">免费创建工作区</NuxtLink>
-          <NuxtLink class="button button-secondary" to="/pricing">查看价格方案</NuxtLink>
+          <NuxtLink class="button button-primary" to="/register">{{ copy.home.hero.primary }}</NuxtLink>
+          <NuxtLink class="button button-secondary" to="/pricing">{{ copy.home.hero.secondary }}</NuxtLink>
         </div>
-        <div class="hero-proof" aria-label="产品亮点">
-          <span>单人公司友好</span>
-          <span>Nuxt 全栈账号</span>
-          <span>面向交付的 AI 工作流</span>
+        <div class="hero-proof" :aria-label="copy.home.hero.proofLabel">
+          <span v-for="item in copy.home.hero.proof" :key="item">{{ item }}</span>
         </div>
       </div>
 

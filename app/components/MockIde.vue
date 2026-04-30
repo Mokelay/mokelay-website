@@ -1,5 +1,9 @@
+<script setup lang="ts">
+const { copy } = useAppSettings()
+</script>
+
 <template>
-  <div class="ide card" aria-label="Mokelay IDE 产品界面示意">
+  <div class="ide card" :aria-label="copy.mockIde.label">
     <div class="ide-top">
       <div class="traffic">
         <span />
@@ -26,8 +30,8 @@
         <div class="code-line"><span>04</span><code>// preview, verify, publish</code></div>
 
         <div class="agent-panel">
-          <p class="agent-title">Mokelay Agent</p>
-          <p>已读取页面、接口和测试上下文。下一步：补齐注册校验并运行 E2E。</p>
+          <p class="agent-title">{{ copy.mockIde.agentTitle }}</p>
+          <p>{{ copy.mockIde.agentBody }}</p>
         </div>
       </section>
     </div>
@@ -38,8 +42,8 @@
 .ide {
   position: relative;
   overflow: hidden;
-  background: #10231f;
-  color: #f9f2dd;
+  background: var(--dark-panel);
+  color: var(--dark-panel-text);
   transform: rotate(1.2deg);
 }
 

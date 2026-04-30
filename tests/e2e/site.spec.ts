@@ -18,6 +18,16 @@ test('renders pricing plans', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Enterprise' })).toBeVisible()
 })
 
+test('switches locale and theme from the header', async ({ page }) => {
+  await page.goto('/')
+
+  await page.getByRole('button', { name: '语言' }).click()
+  await expect(page.getByRole('heading', { name: /Codex-style collaboration/ })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Theme' }).click()
+  await expect(page.locator('body')).toHaveClass(/theme-light/)
+})
+
 test('registers, opens dashboard, and logs out', async ({ page }) => {
   const email = `e2e-${Date.now()}@mokelay.test`
 

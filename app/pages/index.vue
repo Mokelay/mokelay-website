@@ -1,9 +1,11 @@
 <script setup lang="ts">
+const { copy } = useAppSettings()
+
 useSeoMeta({
-  title: 'AI 协作开发 IDE 官网',
-  ogTitle: 'Mokelay IDE - AI 协作开发 IDE',
-  description: 'Mokelay IDE 帮个人开发者和小团队把 AI 编程协作变成可验证、可交付的产品工作流。',
-  ogDescription: '面向 AI 协作开发的在线 IDE，从计划、实现、测试到发布。',
+  title: () => copy.value.home.seoTitle,
+  ogTitle: () => `Mokelay IDE - ${copy.value.home.seoTitle}`,
+  description: () => copy.value.home.seoDescription,
+  ogDescription: () => copy.value.home.seoDescription,
 })
 </script>
 
@@ -17,9 +19,9 @@ useSeoMeta({
     <section class="section">
       <div class="container">
         <div class="section-heading">
-          <p class="eyebrow">Pricing</p>
-          <h2>从免费验证，到团队交付。</h2>
-          <p>第一版先给清晰套餐和账号入口；付费闭环会在 Stripe Billing 阶段接入。</p>
+          <p class="eyebrow">{{ copy.home.pricingPreview.eyebrow }}</p>
+          <h2>{{ copy.home.pricingPreview.title }}</h2>
+          <p>{{ copy.home.pricingPreview.body }}</p>
         </div>
         <PricingCards compact />
       </div>
@@ -30,10 +32,10 @@ useSeoMeta({
     <section class="section-tight">
       <div class="container final-cta">
         <div>
-          <p class="eyebrow">Start</p>
-          <h2>今天先创建一个工作区。</h2>
+          <p class="eyebrow">{{ copy.home.finalCta.eyebrow }}</p>
+          <h2>{{ copy.home.finalCta.title }}</h2>
         </div>
-        <NuxtLink class="button button-accent" to="/register">免费开始</NuxtLink>
+        <NuxtLink class="button button-accent" to="/register">{{ copy.home.finalCta.cta }}</NuxtLink>
       </div>
     </section>
   </div>
@@ -49,7 +51,7 @@ useSeoMeta({
   background:
     radial-gradient(circle at 20% 10%, rgba(215, 245, 107, 0.28), transparent 16rem),
     var(--moss);
-  color: #fffaf0;
+  color: var(--dark-panel-text);
   padding: 34px;
 }
 

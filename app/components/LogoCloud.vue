@@ -1,7 +1,11 @@
+<script setup lang="ts">
+const { copy } = useAppSettings()
+</script>
+
 <template>
   <section class="section-tight">
     <div class="container logo-card">
-      <p>为这样的团队而建</p>
+      <p>{{ copy.home.logosLabel }}</p>
       <div class="logos">
         <span>Solo SaaS</span>
         <span>AI Studio</span>
@@ -34,7 +38,7 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 16px;
-  color: rgba(16, 35, 31, 0.52);
+  color: color-mix(in srgb, var(--ink) 52%, transparent);
   font-family: var(--font-display);
   font-size: clamp(1.1rem, 2.3vw, 1.75rem);
   font-weight: 700;

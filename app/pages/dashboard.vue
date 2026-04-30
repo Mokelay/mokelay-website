@@ -5,10 +5,11 @@ definePageMeta({
 
 const { user, clear } = useUserSession()
 const router = useRouter()
+const { copy } = useAppSettings()
 
 useSeoMeta({
-  title: '控制台',
-  description: 'Mokelay IDE 用户控制台。',
+  title: () => copy.value.dashboard.seoTitle,
+  description: () => copy.value.dashboard.seoDescription,
 })
 
 async function logout() {
@@ -23,30 +24,28 @@ async function logout() {
     <div class="container dashboard">
       <div class="dashboard-hero card">
         <div>
-          <p class="eyebrow">Dashboard</p>
-          <h1>欢迎，{{ user?.name || 'Builder' }}</h1>
-          <p>
-            这里会成为 Mokelay IDE 的工作区入口。当前版本已经打通官网账号、会话和受保护页面。
-          </p>
+          <p class="eyebrow">{{ copy.dashboard.eyebrow }}</p>
+          <h1>{{ copy.dashboard.welcome }}，{{ user?.name || 'Builder' }}</h1>
+          <p>{{ copy.dashboard.body }}</p>
         </div>
-        <button class="button button-secondary" type="button" @click="logout">退出登录</button>
+        <button class="button button-secondary" type="button" @click="logout">{{ copy.dashboard.logout }}</button>
       </div>
 
       <div class="dashboard-grid">
         <article class="card">
-          <span>Plan</span>
+          <span>{{ copy.dashboard.cards[0][0] }}</span>
           <h2>{{ user?.plan || 'free' }}</h2>
-          <p>订阅状态将在 Stripe Billing 第二阶段接入后自动同步。</p>
+          <p>{{ copy.dashboard.cards[0][1] }}</p>
         </article>
         <article class="card">
-          <span>Workspace</span>
-          <h2>Personal</h2>
-          <p>个人工作区已就绪，后续可接入 IDE 项目列表。</p>
+          <span>{{ copy.dashboard.cards[1][0] }}</span>
+          <h2>{{ copy.dashboard.workspaceTitle }}</h2>
+          <p>{{ copy.dashboard.cards[1][1] }}</p>
         </article>
         <article class="card">
-          <span>Next</span>
-          <h2>Connect IDE</h2>
-          <p>复杂 IDE 产品 API 可以继续留在 Nuxt，也可以拆成 Hono 或 NestJS 服务。</p>
+          <span>{{ copy.dashboard.cards[2][0] }}</span>
+          <h2>{{ copy.dashboard.nextTitle }}</h2>
+          <p>{{ copy.dashboard.cards[2][1] }}</p>
         </article>
       </div>
     </div>

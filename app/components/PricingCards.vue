@@ -13,41 +13,21 @@ defineProps<{
   compact?: boolean
 }>()
 
-const plans: Plan[] = [
-  {
-    name: 'Free',
-    price: '¥0',
-    description: '适合先验证一个产品想法。',
-    cta: '免费开始',
-    to: '/register',
-    features: ['1 个个人工作区', '基础 AI 任务流', '官网账号与控制台', '社区支持'],
-  },
-  {
-    name: 'Pro',
-    price: '¥99/月',
-    description: '适合持续交付的个人开发者。',
-    cta: '选择 Pro',
-    to: '/register?plan=pro',
-    featured: true,
-    features: ['无限项目草稿', '高级上下文索引', 'Playwright 验证流', '优先功能预览'],
-  },
-  {
-    name: 'Team',
-    price: '¥299/月',
-    description: '适合小团队共享 AI 开发流程。',
-    cta: '选择 Team',
-    to: '/register?plan=team',
-    features: ['多人工作区', '角色与权限', '共享任务历史', '团队级审计记录'],
-  },
-  {
-    name: 'Enterprise',
-    price: '联系我们',
-    description: '适合私有化、合规和深度集成。',
-    cta: '预约沟通',
-    to: 'mailto:hello@mokelay.com',
-    features: ['私有部署评估', 'SSO/OIDC', '数据保留策略', '专属支持'],
-  },
-]
+const { copy } = useAppSettings()
+
+const planTargets = ['/register', '/register?plan=pro', '/register?plan=team', 'mailto:hello@mokelay.com']
+
+const plans = computed<Plan[]>(() =>
+  copy.value.pricing.plans.map(([name, price, description, cta, features], index) => ({
+    name,
+    price,
+    description,
+    cta,
+    to: planTargets[index] || '/register',
+    featured: index === 1,
+    features: [...features],
+  })),
+)
 </script>
 
 <template>
@@ -59,7 +39,7 @@ const plans: Plan[] = [
       :class="{ featured: plan.featured }"
     >
       <div>
-        <p v-if="plan.featured" class="badge">推荐</p>
+        <p v-if="plan.featured" class="badge">{{ copy.pricing.recommended }}</p>
         <h3>{{ plan.name }}</h3>
         <p class="price">{{ plan.price }}</p>
         <p class="description">{{ plan.description }}</p>
@@ -108,7 +88,7 @@ const plans: Plan[] = [
   background:
     radial-gradient(circle at top right, rgba(215, 245, 107, 0.42), transparent 15rem),
     var(--moss);
-  color: #fffaf0;
+  color: var(--dark-panel-text);
 }
 
 .badge {
@@ -143,7 +123,7 @@ h3 {
 }
 
 .featured .description {
-  color: rgba(255, 250, 240, 0.72);
+  color: color-mix(in srgb, var(--dark-panel-text) 72%, transparent);
 }
 
 ul {
@@ -166,7 +146,7 @@ li::before {
 }
 
 .featured li {
-  color: rgba(255, 250, 240, 0.82);
+  color: color-mix(in srgb, var(--dark-panel-text) 82%, transparent);
 }
 
 .featured li::before {

@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { copy } = useAppSettings()
+</script>
+
 <template>
   <footer class="footer">
     <div class="container footer-grid">
@@ -6,14 +10,14 @@
           <span class="brand-mark">M</span>
           <span>Mokelay IDE</span>
         </NuxtLink>
-        <p>面向 AI 协作开发的在线 IDE，把想法、代码、测试和发布放到一条清晰的工作流里。</p>
+        <p>{{ copy.footer.description }}</p>
       </div>
 
       <div class="footer-links">
-        <NuxtLink to="/#features">产品</NuxtLink>
-        <NuxtLink to="/pricing">价格</NuxtLink>
-        <NuxtLink to="/login">登录</NuxtLink>
-        <NuxtLink to="/register">注册</NuxtLink>
+        <NuxtLink to="/#features">{{ copy.footer.product }}</NuxtLink>
+        <NuxtLink to="/pricing">{{ copy.footer.pricing }}</NuxtLink>
+        <NuxtLink to="/login">{{ copy.footer.login }}</NuxtLink>
+        <NuxtLink to="/register">{{ copy.footer.register }}</NuxtLink>
       </div>
     </div>
   </footer>

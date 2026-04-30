@@ -1,26 +1,19 @@
 <script setup lang="ts">
-const steps = [
-  ['01', 'Describe', '把产品目标和限制写成任务 brief。'],
-  ['02', 'Plan', 'AI 先读代码、再形成可执行计划。'],
-  ['03', 'Build', '按文件边界实现，保留清晰 diff。'],
-  ['04', 'Verify', '运行测试、预览和回归检查后再交付。'],
-]
+const { copy } = useAppSettings()
 </script>
 
 <template>
   <section id="workflow" class="section workflow-section">
     <div class="container workflow card">
       <div class="workflow-copy">
-        <p class="eyebrow">Workflow</p>
-        <h2>让每一次 AI 改动都能落地。</h2>
-        <p>
-          从“帮我做个页面”到“这里是已验证的改动”，Mokelay IDE 会鼓励清晰输入、可靠执行和可复核输出。
-        </p>
+        <p class="eyebrow">{{ copy.home.workflow.eyebrow }}</p>
+        <h2>{{ copy.home.workflow.title }}</h2>
+        <p>{{ copy.home.workflow.body }}</p>
       </div>
 
       <div class="steps">
-        <article v-for="[number, title, body] in steps" :key="title">
-          <span>{{ number }}</span>
+        <article v-for="([title, body], index) in copy.home.workflow.steps" :key="title">
+          <span>{{ String(index + 1).padStart(2, '0') }}</span>
           <h3>{{ title }}</h3>
           <p>{{ body }}</p>
         </article>
@@ -47,7 +40,7 @@ const steps = [
   background:
     radial-gradient(circle at 10% 20%, rgba(215, 245, 107, 0.28), transparent 18rem),
     var(--moss);
-  color: #fffaf0;
+  color: var(--dark-panel-text);
   padding: 34px;
 }
 
@@ -60,7 +53,7 @@ const steps = [
 }
 
 .workflow-copy p:last-child {
-  color: rgba(255, 250, 240, 0.76);
+  color: color-mix(in srgb, var(--dark-panel-text) 76%, transparent);
   line-height: 1.75;
 }
 
@@ -73,7 +66,7 @@ const steps = [
 .steps article {
   border: 1px solid var(--line);
   border-radius: 24px;
-  background: rgba(255, 252, 244, 0.62);
+  background: var(--surface-soft);
   padding: 24px;
 }
 

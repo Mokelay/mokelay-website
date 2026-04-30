@@ -4,6 +4,7 @@
   --muted: #6f837d;
   --paper: #fbf7ef;
   --paper-deep: #efe4d0;
+  --paper-warm: #fffaf0;
   --moss: #0f3028;
   --moss-soft: #dcebe0;
   --cedar: #cf5d36;
@@ -12,8 +13,45 @@
   --sea: #6ec6b6;
   --line: rgba(16, 35, 31, 0.14);
   --shadow: 0 24px 80px rgba(15, 48, 40, 0.14);
+  --body-bg:
+    radial-gradient(circle at 12% 8%, rgba(215, 245, 107, 0.22), transparent 28rem),
+    radial-gradient(circle at 88% 4%, rgba(110, 198, 182, 0.22), transparent 26rem),
+    linear-gradient(180deg, #fffaf0 0%, var(--paper) 38%, #f4ecd9 100%);
+  --surface: rgba(255, 252, 244, 0.72);
+  --surface-strong: rgba(255, 252, 244, 0.84);
+  --surface-soft: rgba(255, 252, 244, 0.62);
+  --control-bg: rgba(255, 252, 244, 0.7);
+  --dark-panel: #10231f;
+  --dark-panel-text: #fffaf0;
   --font-sans: 'Space Grotesk', 'Avenir Next', sans-serif;
   --font-display: 'Fraunces', Georgia, serif;
+}
+
+body.theme-light {
+  --ink: #172033;
+  --ink-soft: #44526a;
+  --muted: #748097;
+  --paper: #f8fafc;
+  --paper-deep: #e8eef6;
+  --paper-warm: #ffffff;
+  --moss: #2656d9;
+  --moss-soft: #e7edff;
+  --cedar: #e07142;
+  --cedar-dark: #b84c25;
+  --lime: #bdf26a;
+  --sea: #7cb7ff;
+  --line: rgba(23, 32, 51, 0.12);
+  --shadow: 0 24px 80px rgba(46, 67, 108, 0.12);
+  --body-bg:
+    radial-gradient(circle at 18% 10%, rgba(124, 183, 255, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 4%, rgba(189, 242, 106, 0.18), transparent 26rem),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 42%, #eef3f9 100%);
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.9);
+  --surface-soft: rgba(255, 255, 255, 0.66);
+  --control-bg: rgba(255, 255, 255, 0.76);
+  --dark-panel: #172033;
+  --dark-panel-text: #ffffff;
 }
 
 * {
@@ -26,12 +64,12 @@ html {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(215, 245, 107, 0.22), transparent 28rem),
-    radial-gradient(circle at 88% 4%, rgba(110, 198, 182, 0.22), transparent 26rem),
-    linear-gradient(180deg, #fffaf0 0%, var(--paper) 38%, #f4ecd9 100%);
+  background: var(--body-bg);
   color: var(--ink);
   font-family: var(--font-sans);
+  transition:
+    background 180ms ease,
+    color 180ms ease;
 }
 
 a {
@@ -74,7 +112,7 @@ img {
   width: fit-content;
   border: 1px solid rgba(15, 48, 40, 0.14);
   border-radius: 999px;
-  background: rgba(255, 252, 244, 0.76);
+  background: var(--surface-strong);
   color: var(--cedar-dark);
   font-size: 0.82rem;
   font-weight: 700;
@@ -129,12 +167,12 @@ img {
 .button-primary {
   background: var(--moss);
   box-shadow: 0 14px 34px rgba(15, 48, 40, 0.22);
-  color: #fffaf0;
+  color: var(--dark-panel-text);
 }
 
 .button-secondary {
   border-color: rgba(16, 35, 31, 0.18);
-  background: rgba(255, 252, 244, 0.7);
+  background: var(--control-bg);
   color: var(--ink);
 }
 
@@ -151,7 +189,7 @@ img {
 .card {
   border: 1px solid var(--line);
   border-radius: 30px;
-  background: rgba(255, 252, 244, 0.72);
+  background: var(--surface);
   box-shadow: var(--shadow);
   backdrop-filter: blur(20px);
 }
