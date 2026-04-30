@@ -34,8 +34,8 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    databaseUrl: '',
-    stripeWebhookSecret: '',
+    databaseUrl: process.env.NUXT_DATABASE_URL || process.env.DATABASE_URL || '',
+    stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '',
     public: {
       siteUrl: 'http://localhost:3000',
       productAppUrl: '/dashboard',
