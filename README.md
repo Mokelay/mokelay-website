@@ -33,7 +33,6 @@ brew services start postgresql@16
 项目本地数据库连接：
 
 ```env
-NUXT_DATABASE_URL=postgres://mokelay:mokelay@127.0.0.1:5432/mokelay
 DATABASE_URL=postgres://mokelay:mokelay@127.0.0.1:5432/mokelay
 ```
 
