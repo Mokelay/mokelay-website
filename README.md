@@ -51,6 +51,16 @@ npm run test:e2e
 
 Playwright 会自动启动 Nuxt dev server，并使用内存用户库跑通注册、控制台和登出流程。
 
+## 部署
+
+推荐使用 Vercel + Neon：
+
+```bash
+npm run deploy:check
+```
+
+生产环境变量示例见 `.env.production.example`，完整步骤见 `docs/deploy-vercel-neon.md`。
+
 ## 项目结构
 
 - `app/pages`：官网页面和控制台页面。

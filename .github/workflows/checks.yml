@@ -1,0 +1,29 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      NUXT_SESSION_PASSWORD: test-session-password-at-least-32-characters
+      DATABASE_URL: ''
+      NUXT_PUBLIC_SITE_URL: https://www.mokelay.com
+      NUXT_PUBLIC_PRODUCT_APP_URL: /dashboard
+      NITRO_PRESET: vercel
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run build

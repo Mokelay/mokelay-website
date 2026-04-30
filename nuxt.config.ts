@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   srcDir: 'app',
   serverDir: 'server',
   compatibilityDate: '2026-04-30',
+  nitro: {
+    preset: process.env.NITRO_PRESET || 'vercel',
+  },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   typescript: {
@@ -37,8 +40,8 @@ export default defineNuxtConfig({
     databaseUrl: process.env.NUXT_DATABASE_URL || process.env.DATABASE_URL || '',
     stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '',
     public: {
-      siteUrl: 'http://localhost:3000',
-      productAppUrl: '/dashboard',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      productAppUrl: process.env.NUXT_PUBLIC_PRODUCT_APP_URL || '/dashboard',
     },
   },
   routeRules: {
