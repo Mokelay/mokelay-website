@@ -5,7 +5,8 @@ const props = defineProps<{
 
 const route = useRoute()
 const router = useRouter()
-const { fetch: refreshSession } = useUserSession()
+const api = useApiClient()
+const { fetch: refreshSession } = useAuthSession()
 const { copy } = useAppSettings()
 
 const form = reactive({
@@ -49,7 +50,7 @@ async function submit() {
 
   try {
     const endpoint = props.mode === 'login' ? '/api/auth/login' : '/api/auth/register'
-    await $fetch(endpoint, {
+    await api(endpoint, {
       method: 'POST',
       body: props.mode === 'login'
         ? { email: form.email, password: form.password }

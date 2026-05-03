@@ -1,11 +1,6 @@
 export default defineNuxtConfig({
-  modules: ['nuxt-auth-utils'],
   srcDir: 'app',
-  serverDir: 'server',
   compatibilityDate: '2026-04-30',
-  nitro: {
-    preset: process.env.NITRO_PRESET || 'vercel',
-  },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   typescript: {
@@ -37,15 +32,17 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    databaseUrl: process.env.NUXT_DATABASE_URL || process.env.DATABASE_URL || '',
-    stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET || '',
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
       productAppUrl: process.env.NUXT_PUBLIC_PRODUCT_APP_URL || '/dashboard',
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8787',
     },
   },
   routeRules: {
     '/': { prerender: true },
     '/pricing': { prerender: true },
+    '/login': { prerender: true },
+    '/register': { prerender: true },
+    '/dashboard': { prerender: true },
   },
 })

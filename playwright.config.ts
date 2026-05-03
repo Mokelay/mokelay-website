@@ -14,13 +14,28 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: {
-    command: 'npm run dev -- --host 127.0.0.1 --port 3000',
-    url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-    env: {
-      NUXT_SESSION_PASSWORD: 'dev-session-password-at-least-32-characters',
+  webServer: [
+    {
+      command: 'npm run dev',
+      url: 'http://127.0.0.1:8787/health',
+      cwd: '../mokelay-server',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        DATABASE_URL: '',
+        SESSION_SECRET: 'dev-session-password-at-least-32-characters',
+        COOKIE_DOMAIN: '',
+        CORS_ORIGINS: 'http://127.0.0.1:3000',
+      },
     },
-  },
+    {
+      command: 'npm run dev -- --host 127.0.0.1 --port 3000',
+      url: 'http://127.0.0.1:3000',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+      env: {
+        NUXT_PUBLIC_API_BASE_URL: 'http://127.0.0.1:8787',
+      },
+    },
+  ],
 })

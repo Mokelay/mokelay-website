@@ -49,7 +49,7 @@ const messages = {
         secondary: '查看价格方案',
         tryEditor: '体验产品',
         proofLabel: '产品亮点',
-        proof: ['单人公司友好', 'Nuxt 全栈账号', '面向交付的 AI 工作流'],
+        proof: ['单人公司友好', '独立 API 账号', '面向交付的 AI 工作流'],
       },
       logosLabel: '为这样的团队而建',
       features: {
@@ -60,9 +60,9 @@ const messages = {
           ['项目上下文常驻', '把需求、代码结构、历史决策和测试信号放在同一个工作区，减少每次重新解释项目的摩擦。'],
           ['从计划到验证', '把 AI 任务拆成可执行边界，自动串起实现、预览、测试和回归检查。'],
           ['OPC 友好', '为个人公司和小团队减少运维负担：一个人也能维护清晰流程、账号和发布节奏。'],
-          ['全栈入口', '官网、账号、价格方案和未来产品控制台共享一套 Nuxt/Vue 工程语言。'],
+          ['静态官网入口', '官网、账号入口、价格方案和未来产品控制台由静态 Nuxt/Vue 前端承载。'],
           ['协作不失控', '用明确的任务状态、文件边界和测试反馈，让 AI 改动可追踪、可复核。'],
-          ['可逐步私有化', 'PostgreSQL、Drizzle 和 Nitro 的组合保留未来拆服务或私有部署的空间。'],
+          ['可逐步私有化', '独立 API 服务、PostgreSQL 和 Drizzle 保留未来私有部署的空间。'],
         ],
       },
       workflow: {
@@ -88,7 +88,7 @@ const messages = {
           ['Mokelay IDE 和普通 AI Chat 有什么区别？', 'Mokelay IDE 的目标不是只回答问题，而是围绕项目上下文执行开发任务：读代码、改文件、跑测试、解释交付结果。'],
           ['第一版价格会直接收费吗？', '当前实现先做静态价格方案和账号入口。Stripe Billing 会作为第二阶段接入，避免过早把支付复杂度压到发布前。'],
           ['为什么官网也要完整登录/注册？', '这样官网、价格页和产品控制台能形成闭环，用户注册后可以直接进入 dashboard，后续再接 IDE 主应用。'],
-          ['能否私有化部署？', '当前技术栈保留私有化路径：Nuxt/Nitro、PostgreSQL、Drizzle 都可以迁移到自托管或私有云环境。'],
+          ['能否私有化部署？', '当前技术栈保留私有化路径：静态官网、独立 API 服务、PostgreSQL 和 Drizzle 都可以迁移到自托管或私有云环境。'],
         ],
       },
       finalCta: {
@@ -125,13 +125,13 @@ const messages = {
       registerPage: {
         eyebrow: 'Create workspace',
         title: '先创建账号，再把想法交给工作流。',
-        body: '第一版账号体系直接由 Nuxt Server 承载，默认支持本地开发 fallback，生产环境连接 PostgreSQL。',
+        body: '第一版账号体系由独立 API 服务承载，官网保持纯静态，生产环境连接 PostgreSQL。',
       },
       form: {
         loginTitle: '欢迎回来',
         registerTitle: '创建你的 Mokelay 工作区',
         loginSubtitle: '继续进入控制台，管理你的 IDE 工作区和订阅状态。',
-        registerSubtitle: '注册后会自动进入控制台。第一版使用内置账号体系，后续可接 OAuth 和 Stripe。',
+        registerSubtitle: '注册后会自动进入控制台。第一版使用独立账号 API，后续可接 OAuth 和 Stripe。',
         loginSubmit: '登录',
         registerSubmit: '注册并进入控制台',
         name: '姓名',
@@ -155,7 +155,7 @@ const messages = {
       cards: [
         ['Plan', '订阅状态将在 Stripe Billing 第二阶段接入后自动同步。'],
         ['Workspace', '个人工作区已就绪，后续可接入 IDE 项目列表。'],
-        ['Next', '复杂 IDE 产品 API 可以继续留在 Nuxt，也可以拆成 Hono 或 NestJS 服务。'],
+        ['Next', '复杂 IDE 产品 API 会继续沉淀到独立服务，官网保持静态入口。'],
       ],
       workspaceTitle: 'Personal',
       nextTitle: 'Connect IDE',
@@ -203,7 +203,7 @@ const messages = {
         secondary: 'View pricing',
         tryEditor: 'Try product',
         proofLabel: 'Product highlights',
-        proof: ['Solo-company friendly', 'Nuxt full-stack account system', 'Delivery-oriented AI workflow'],
+        proof: ['Solo-company friendly', 'Standalone account API', 'Delivery-oriented AI workflow'],
       },
       logosLabel: 'Built for teams like these',
       features: {
@@ -214,9 +214,9 @@ const messages = {
           ['Persistent project context', 'Keep requirements, code structure, decisions, and test signals in one workspace so you explain less every time.'],
           ['Plan to verification', 'Break AI tasks into executable boundaries and connect implementation, preview, tests, and regression checks.'],
           ['OPC friendly', 'Reduce operational drag for solo companies and small teams with clear flows, accounts, and release rhythm.'],
-          ['Full-stack entry point', 'Website, account, pricing, and future console all share one Nuxt/Vue engineering language.'],
+          ['Static website entry point', 'Website, account entry, pricing, and future console run as a static Nuxt/Vue frontend.'],
           ['Controlled collaboration', 'Make AI edits traceable and reviewable through task state, file boundaries, and test feedback.'],
-          ['Private-deploy ready', 'PostgreSQL, Drizzle, and Nitro keep a path open for service extraction or private cloud deployment.'],
+          ['Private-deploy ready', 'The standalone API service, PostgreSQL, and Drizzle keep a path open for private cloud deployment.'],
         ],
       },
       workflow: {
@@ -242,7 +242,7 @@ const messages = {
           ['How is Mokelay IDE different from normal AI chat?', 'Mokelay IDE is not just for answers. It works around project context to read code, edit files, run tests, and explain delivery results.'],
           ['Will the first release charge users directly?', 'This implementation starts with static pricing and account entry. Stripe Billing is reserved for phase two to avoid shipping-blocking payment complexity.'],
           ['Why does the website include full login and registration?', 'It creates a closed loop across the website, pricing page, and product console. Users can register and go straight to the dashboard.'],
-          ['Can it be privately deployed?', 'The stack keeps that path open: Nuxt/Nitro, PostgreSQL, and Drizzle can all move to self-hosted or private cloud environments.'],
+          ['Can it be privately deployed?', 'The stack keeps that path open: the static website, standalone API service, PostgreSQL, and Drizzle can all move to self-hosted or private cloud environments.'],
         ],
       },
       finalCta: {
@@ -279,7 +279,7 @@ const messages = {
       registerPage: {
         eyebrow: 'Create workspace',
         title: 'Create an account, then hand ideas to the workflow.',
-        body: 'The first account system is handled by Nuxt Server, with a local fallback for development and PostgreSQL in production.',
+        body: 'The first account system is handled by the standalone API service, while the website stays static and production data lives in PostgreSQL.',
       },
       form: {
         loginTitle: 'Welcome back',
@@ -309,7 +309,7 @@ const messages = {
       cards: [
         ['Plan', 'Subscription status will sync automatically after Stripe Billing is connected in phase two.'],
         ['Workspace', 'Your personal workspace is ready. IDE project lists can be connected next.'],
-        ['Next', 'Complex IDE product APIs can stay in Nuxt or be split into Hono or NestJS services.'],
+        ['Next', 'Complex IDE product APIs will continue moving into standalone services while the website stays static.'],
       ],
       workspaceTitle: 'Personal',
       nextTitle: 'Connect IDE',

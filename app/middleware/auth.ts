@@ -1,5 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const { loggedIn, fetch } = useUserSession()
+  if (import.meta.server) {
+    return
+  }
+
+  const { loggedIn, fetch } = useAuthSession()
 
   await fetch()
 

@@ -1,22 +1,31 @@
-# Deploy to Vercel + Neon
+# Deploy Static Website and API
 
-This project is a Nuxt 4 SSR/Nitro application with PostgreSQL-backed auth. The recommended low-maintenance production setup is Vercel for the app and Neon for Postgres.
+`mokelay-website` is now a static Nuxt site. PostgreSQL, Drizzle migrations, auth, and billing webhooks live in `mokelay-server`.
 
-## 1. Create Neon
+## 1. Deploy API
 
-1. Create a Neon project.
-2. Copy the **pooled** connection string.
-3. Keep `sslmode=require` in the URL.
+Deploy `mokelay-server` to Vercel and bind `api.mokelay.com`.
 
-Example:
+API production variables:
 
 ```env
-DATABASE_URL=postgres://USER:PASSWORD@HOST.neon.tech/DBNAME?sslmode=require
+NODE_ENV=production
+DATABASE_URL=your-neon-pooled-connection-string
+SESSION_SECRET=use-a-strong-random-string-at-least-32-chars
+COOKIE_DOMAIN=.mokelay.com
+CORS_ORIGINS=https://www.mokelay.com,https://mokelay.com
+STRIPE_WEBHOOK_SECRET=
 ```
 
-## 2. Configure Vercel
+Run database migrations from `mokelay-server` before production signups:
 
-Import the GitHub repository into Vercel.
+```bash
+DATABASE_URL="your-neon-pooled-connection-string" npm run db:migrate
+```
+
+## 2. Deploy Website
+
+Import `mokelay-website` into Vercel.
 
 Project settings:
 
@@ -24,58 +33,30 @@ Project settings:
 Framework Preset: Nuxt.js
 Install Command: npm ci
 Build Command: npm run build
+Output Directory: .output/public
 ```
 
-Environment variables:
+Website production variables:
 
 ```env
 NODE_ENV=production
-NITRO_PRESET=vercel
-NUXT_SESSION_PASSWORD=use-a-strong-random-string-at-least-32-chars
-DATABASE_URL=your-neon-pooled-connection-string
 NUXT_PUBLIC_SITE_URL=https://www.mokelay.com
 NUXT_PUBLIC_PRODUCT_APP_URL=/dashboard
-STRIPE_WEBHOOK_SECRET=
+NUXT_PUBLIC_API_BASE_URL=https://api.mokelay.com
 ```
 
-Generate a session password locally:
+## 3. Bind Domains
 
-```bash
-openssl rand -base64 48
-```
+1. Add `api.mokelay.com` to the API Vercel project.
+2. Add `www.mokelay.com` to the website Vercel project.
+3. Add the DNS records requested by Vercel and wait for HTTPS certificates.
 
-## 3. Run Database Migrations
+Optional: redirect `mokelay.com` to `www.mokelay.com` in the website project.
 
-Run migrations against Neon before production signups:
-
-```bash
-DATABASE_URL="your-neon-pooled-connection-string" npm run db:migrate
-```
-
-If you prefer using the Vercel environment locally:
-
-```bash
-vercel env pull .env.production.local
-DATABASE_URL="$(grep '^DATABASE_URL=' .env.production.local | cut -d= -f2-)" npm run db:migrate
-```
-
-## 4. Bind the Domain
-
-1. Add `www.mokelay.com` in Vercel project domains.
-2. Add the DNS record requested by Vercel, usually a `CNAME` for `www`.
-3. Wait for Vercel to issue HTTPS automatically.
-
-Optional: redirect the apex domain `mokelay.com` to `www.mokelay.com` in Vercel.
-
-## 5. Verify
-
-```bash
-npm run deploy:check
-```
-
-After deployment:
+## 4. Verify
 
 - Open `https://www.mokelay.com`.
 - Visit `/pricing`, `/login`, `/register`, and `/dashboard`.
-- Register a user and confirm the record appears in Neon `users`.
-- Check Vercel Function logs for database or session errors.
+- Register a user and confirm `api.mokelay.com` sets `mokelay_session`.
+- Confirm the user appears in the production PostgreSQL `users` table.
+- Check API Vercel logs for database, CORS, or session errors.

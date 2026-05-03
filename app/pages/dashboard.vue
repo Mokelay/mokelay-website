@@ -3,7 +3,8 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const { user, clear } = useUserSession()
+const api = useApiClient()
+const { user, clear } = useAuthSession()
 const router = useRouter()
 const { copy } = useAppSettings()
 
@@ -13,7 +14,7 @@ useSeoMeta({
 })
 
 async function logout() {
-  await $fetch('/api/auth/logout', { method: 'POST' })
+  await api('/api/auth/logout', { method: 'POST' })
   await clear()
   await router.push('/login')
 }

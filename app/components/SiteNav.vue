@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { loggedIn } = useUserSession()
+const { loggedIn, initialized, fetch: fetchAuthSession } = useAuthSession()
 const { copy, locale, localeLabel, theme, themeLabel, toggleLocale, toggleTheme } = useAppSettings()
 const ready = ref(false)
 
@@ -12,6 +12,10 @@ const links = computed(() => [
 
 onMounted(() => {
   ready.value = true
+
+  if (!initialized.value) {
+    fetchAuthSession()
+  }
 })
 </script>
 

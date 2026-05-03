@@ -18,7 +18,7 @@ const { copy } = useAppSettings()
       <aside class="files">
         <strong>workspace</strong>
         <span class="active">pages/index.vue</span>
-        <span>server/api/auth</span>
+        <span>api.mokelay.com/auth</span>
         <span>tests/e2e/site.spec.ts</span>
         <span>README.md</span>
       </aside>

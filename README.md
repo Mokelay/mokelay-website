@@ -1,16 +1,25 @@
 # Mokelay Website
 
-Mokelay IDE 官网，基于 Nuxt 4、Vue 3、TypeScript、Nuxt Server/Nitro、nuxt-auth-utils、PostgreSQL 和 Drizzle ORM。
+Mokelay IDE static website, built with Nuxt 4, Vue 3, and TypeScript. Runtime API calls go to the standalone Mokelay API service.
 
-## 功能
+## Features
 
-- 首页产品介绍、功能卖点、工作流展示、FAQ 和转化 CTA。
-- `/pricing` 静态价格方案：Free、Pro、Team、Enterprise。
-- `/login`、`/register` 完整账号入口。
-- `/dashboard` 受保护控制台页面。
-- `/api/auth/register`、`/api/auth/login`、`/api/auth/logout`、`/api/me`、`/api/billing/webhook`。
+- Static marketing home page with product sections, workflow preview, FAQ, and conversion CTAs.
+- `/pricing` static pricing page for Free, Pro, Team, and Enterprise.
+- `/login`, `/register`, and `/dashboard` client-side account flows.
+- Auth and user data are served by `mokelay-server` at `https://api.mokelay.com`.
 
-## 快速开始
+## Local Development
+
+Run the API first:
+
+```bash
+cd ../mokelay-server
+npm install
+npm run dev
+```
+
+Then run the website:
 
 ```bash
 npm install
@@ -18,30 +27,9 @@ cp .env.example .env
 npm run dev
 ```
 
-`NUXT_SESSION_PASSWORD` 必须至少 32 个字符。未配置 `DATABASE_URL` 时，开发环境会使用进程内存用户库，方便本地预览和 E2E；生产环境请配置 PostgreSQL。
+The website defaults to `NUXT_PUBLIC_API_BASE_URL=http://localhost:8787`.
 
-## 数据库
-
-Drizzle schema 位于 `server/database/schema.ts`。
-
-本地开发默认使用 Homebrew PostgreSQL 16：
-
-```bash
-brew services start postgresql@16
-```
-
-项目本地数据库连接：
-
-```env
-DATABASE_URL=postgres://mokelay:mokelay@127.0.0.1:5432/mokelay
-```
-
-```bash
-npm run db:generate
-npm run db:migrate
-```
-
-## 测试
+## Testing
 
 ```bash
 npm run typecheck
@@ -49,24 +37,32 @@ npm run test:unit
 npm run test:e2e
 ```
 
-Playwright 会自动启动 Nuxt dev server，并使用内存用户库跑通注册、控制台和登出流程。
+Playwright starts the static website dev server. For auth E2E, keep `mokelay-server` running on `http://localhost:8787`.
 
-## 部署
+## Deployment
 
-推荐使用 Vercel + Neon：
+Deploy the website as a static Nuxt output on Vercel:
 
 ```bash
 npm run deploy:check
 ```
 
-生产环境变量示例见 `.env.production.example`，完整步骤见 `docs/deploy-vercel-neon.md`。
+Production environment variables:
 
-## 项目结构
+```env
+NODE_ENV=production
+NUXT_PUBLIC_SITE_URL=https://www.mokelay.com
+NUXT_PUBLIC_PRODUCT_APP_URL=/dashboard
+NUXT_PUBLIC_API_BASE_URL=https://api.mokelay.com
+```
 
-- `app/pages`：官网页面和控制台页面。
-- `app/components`：营销区块、价格卡片、认证表单和导航组件。
-- `server/api`：Nitro API route。
-- `server/utils`：数据库、用户存储和校验工具。
-- `server/database`：Drizzle schema。
-- `tests/unit`：Vitest 单元测试。
-- `tests/e2e`：Playwright E2E 测试。
+The API service is deployed separately from `mokelay-server` and bound to `api.mokelay.com`.
+
+## Project Structure
+
+- `app/pages`: static pages and client dashboard.
+- `app/components`: marketing sections, pricing cards, auth form, and navigation.
+- `app/composables`: app settings, API client, and auth session state.
+- `app/utils`: small client-safe utilities.
+- `tests/unit`: Vitest unit tests.
+- `tests/e2e`: Playwright E2E tests.
