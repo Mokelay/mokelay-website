@@ -5,7 +5,7 @@ const props = defineProps<{
 
 const route = useRoute()
 const router = useRouter()
-const api = useApiClient()
+const authApi = useMokelayAuthApi()
 const { fetch: refreshSession } = useAuthSession()
 const { copy } = useAppSettings()
 
@@ -24,6 +24,9 @@ type RequestError = Error & {
   data?: {
     message?: string
     statusMessage?: string
+    error?: {
+      message?: string
+    }
   }
 }
 
@@ -49,13 +52,12 @@ async function submit() {
   loading.value = true
 
   try {
-    const endpoint = props.mode === 'login' ? '/api/auth/login' : '/api/auth/register'
-    await api(endpoint, {
-      method: 'POST',
-      body: props.mode === 'login'
-        ? { email: form.email, password: form.password }
-        : { name: form.name, email: form.email, password: form.password },
-    })
+    if (props.mode === 'login') {
+      await authApi.login({ email: form.email, password: form.password })
+    } else {
+      await authApi.register({ name: form.name, email: form.email, password: form.password })
+    }
+
     await refreshSession()
 
     const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard'
@@ -63,7 +65,8 @@ async function submit() {
   } catch (error) {
     const requestError = error as RequestError
     errorMessage.value =
-      requestError.data?.statusMessage
+      requestError.data?.error?.message
+      || requestError.data?.statusMessage
       || requestError.data?.message
       || requestError.statusMessage
       || requestError.message

@@ -1,14 +1,4 @@
-export type PublicUser = {
-  id: string
-  name: string
-  email: string
-  plan: string
-}
-
-type AuthSessionResponse = {
-  loggedIn: boolean
-  user: PublicUser | null
-}
+import type { PublicUser } from '~/utils/mokelay-auth'
 
 type AuthState = {
   loggedIn: boolean
@@ -24,13 +14,13 @@ export function useAuthSession() {
     pending: false,
     initialized: false,
   }))
-  const api = useApiClient()
+  const authApi = useMokelayAuthApi()
 
   async function fetch() {
     state.value.pending = true
 
     try {
-      const session = await api<AuthSessionResponse>('/api/me')
+      const session = await authApi.me()
 
       state.value.loggedIn = session.loggedIn
       state.value.user = session.user

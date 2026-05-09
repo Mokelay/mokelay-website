@@ -3,7 +3,7 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const api = useApiClient()
+const authApi = useMokelayAuthApi()
 const { user, clear } = useAuthSession()
 const router = useRouter()
 const { copy } = useAppSettings()
@@ -14,7 +14,7 @@ useSeoMeta({
 })
 
 async function logout() {
-  await api('/api/auth/logout', { method: 'POST' })
+  await authApi.logout()
   await clear()
   await router.push('/login')
 }
