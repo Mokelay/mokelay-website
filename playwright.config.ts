@@ -22,7 +22,6 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
       env: {
-        DATABASE_URL: '',
         SESSION_SECRET: 'dev-session-password-at-least-32-characters',
         COOKIE_DOMAIN: '',
         CORS_ORIGINS: 'http://127.0.0.1:3000',

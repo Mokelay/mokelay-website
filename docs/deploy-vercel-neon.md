@@ -10,7 +10,7 @@ API production variables:
 
 ```env
 NODE_ENV=production
-DATABASE_URL=your-neon-pooled-connection-string
+Mokelay_DATABASE_URL=your-neon-pooled-connection-string
 SESSION_SECRET=use-a-strong-random-string-at-least-32-chars
 COOKIE_DOMAIN=.mokelay.com
 CORS_ORIGINS=https://www.mokelay.com,https://mokelay.com
@@ -20,7 +20,7 @@ STRIPE_WEBHOOK_SECRET=
 Run database migrations from `mokelay-server` before production signups:
 
 ```bash
-DATABASE_URL="your-neon-pooled-connection-string" npm run db:migrate
+Mokelay_DATABASE_URL="your-neon-pooled-connection-string" npm run db:migrate
 ```
 
 ## 2. Deploy Website
