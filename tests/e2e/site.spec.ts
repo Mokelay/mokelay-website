@@ -18,6 +18,19 @@ test('renders pricing plans', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Enterprise' })).toBeVisible()
 })
 
+test('updates baccarat probabilities after observed cards', async ({ page }) => {
+  await page.goto('/baccarat')
+
+  await page.getByLabel('牌副数').fill('8')
+  await page.getByRole('button', { name: '计算概率' }).click()
+
+  await expect(page.getByText('45.8597%')).toBeVisible()
+  await page.getByTestId('baccarat-rank-9').click()
+  await expect(page.getByText('已出现', { exact: true })).toBeVisible()
+  await expect(page.getByText('1 张')).toBeVisible()
+  await expect(page.getByText('已出 1 / 剩 31')).toBeVisible()
+})
+
 test('switches locale and theme from the header', async ({ page }) => {
   await page.goto('/')
 
