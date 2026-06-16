@@ -3,15 +3,15 @@ import { expect, test } from '@playwright/test'
 test('renders the marketing home page', async ({ page }) => {
   await page.goto('/')
 
-  await expect(page.getByRole('heading', { name: /Codex 式协作/ })).toBeVisible()
-  await expect(page.getByRole('link', { name: '免费创建工作区' })).toBeVisible()
-  await expect(page.getByText('不是聊天机器人，是开发交付系统。')).toBeVisible()
+  await expect(page.getByRole('heading', { name: /更少 Token/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: '免费试用生成器' })).toBeVisible()
+  await expect(page.getByText('把生成成本和使用门槛一起降下来。')).toBeVisible()
 })
 
 test('renders pricing plans', async ({ page }) => {
   await page.goto('/pricing')
 
-  await expect(page.getByRole('heading', { name: '价格清楚，工作流更清楚。' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '按生成规模和集成深度选择。' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Free' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Pro' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Team' })).toBeVisible()
@@ -22,7 +22,7 @@ test('switches locale and theme from the header', async ({ page }) => {
   await page.goto('/')
 
   await page.getByRole('button', { name: '语言' }).click()
-  await expect(page.getByRole('heading', { name: /Codex-style collaboration/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /fewer tokens/ })).toBeVisible()
 
   await page.getByRole('button', { name: 'Theme' }).click()
   await expect(page.locator('body')).toHaveClass(/theme-light/)

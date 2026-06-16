@@ -7,7 +7,6 @@ const links = computed(() => [
   { label: copy.value.nav.product, to: '/#features' },
   { label: copy.value.nav.workflow, to: '/#workflow' },
   { label: copy.value.nav.pricing, to: '/pricing' },
-  { label: copy.value.nav.faq, to: '/#faq' },
 ])
 
 onMounted(() => {
@@ -24,7 +23,7 @@ onMounted(() => {
     <nav class="container nav">
       <NuxtLink class="brand" to="/" :aria-label="copy.common.brandHome">
         <span class="brand-mark">M</span>
-        <span>Mokelay IDE</span>
+        <span>Mokelay</span>
       </NuxtLink>
 
       <div class="nav-links" :aria-label="copy.nav.main">

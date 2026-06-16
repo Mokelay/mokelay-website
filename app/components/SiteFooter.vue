@@ -8,7 +8,7 @@ const { copy } = useAppSettings()
       <div>
         <NuxtLink class="brand" to="/">
           <span class="brand-mark">M</span>
-          <span>Mokelay IDE</span>
+          <span>Mokelay</span>
         </NuxtLink>
         <p>{{ copy.footer.description }}</p>
       </div>

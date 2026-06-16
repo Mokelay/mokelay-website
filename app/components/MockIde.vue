@@ -10,24 +10,24 @@ const { copy } = useAppSettings()
         <span />
         <span />
       </div>
-      <div class="branch">codex/landing-page</div>
+      <div class="branch">mokelay/triple-end</div>
       <div class="status">Ready</div>
     </div>
 
     <div class="ide-body">
       <aside class="files">
-        <strong>workspace</strong>
-        <span class="active">pages/index.vue</span>
-        <span>api.mokelay.com/auth</span>
-        <span>tests/e2e/site.spec.ts</span>
-        <span>README.md</span>
+        <strong>generator</strong>
+        <span class="active">schema/page.json</span>
+        <span>i18n/zh-en.yml</span>
+        <span>targets/web-app-mini</span>
+        <span>deploy/guide</span>
       </aside>
 
       <section class="editor">
-        <div class="code-line"><span>01</span><code>&lt;Hero goal="launch" /&gt;</code></div>
-        <div class="code-line"><span>02</span><code>const task = await codex.plan()</code></div>
-        <div class="code-line highlight"><span>03</span><code>ship({ tests: true, scope: 'clear' })</code></div>
-        <div class="code-line"><span>04</span><code>// preview, verify, publish</code></div>
+        <div class="code-line"><span>01</span><code>token.out = source.out * 0.34</code></div>
+        <div class="code-line"><span>02</span><code>targets = ['web', 'app', 'mini']</code></div>
+        <div class="code-line highlight"><span>03</span><code>generate({ i18n: true, model: 'lite' })</code></div>
+        <div class="code-line"><span>04</span><code>deploy({ guided: true })</code></div>
 
         <div class="agent-panel">
           <p class="agent-title">{{ copy.mockIde.agentTitle }}</p>
@@ -150,6 +150,8 @@ const { copy } = useAppSettings()
 
 .code-line code {
   font-family: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .highlight {

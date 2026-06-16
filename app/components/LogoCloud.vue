@@ -7,11 +7,7 @@ const { copy } = useAppSettings()
     <div class="container logo-card">
       <p>{{ copy.home.logosLabel }}</p>
       <div class="logos">
-        <span>Solo SaaS</span>
-        <span>AI Studio</span>
-        <span>Indie Hacker</span>
-        <span>Product Lab</span>
-        <span>Dev Agency</span>
+        <span v-for="item in copy.home.logoItems" :key="item">{{ item }}</span>
       </div>
     </div>
   </section>

@@ -1,10 +1,10 @@
 # Mokelay Website
 
-Mokelay IDE static website, built with Nuxt 4, Vue 3, and TypeScript. Runtime API calls go to the standalone Mokelay API service.
+Mokelay static website for the low-token multi-end app generator, built with Nuxt 4, Vue 3, and TypeScript. Runtime API calls go to the standalone Mokelay API service.
 
 ## Features
 
-- Static marketing home page with product sections, workflow preview, FAQ, and conversion CTAs.
+- Static marketing home page with low-token generation, lower model requirements, multi-end output, and conversion CTAs.
 - `/pricing` static pricing page for Free, Pro, Team, and Enterprise.
 - `/login`, `/register`, and `/dashboard` client-side account flows.
 - Auth and user data are served by `mokelay-server` at `https://api.mokelay.com`.

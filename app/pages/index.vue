@@ -3,7 +3,7 @@ const { copy } = useAppSettings()
 
 useSeoMeta({
   title: () => copy.value.home.seoTitle,
-  ogTitle: () => `Mokelay IDE - ${copy.value.home.seoTitle}`,
+  ogTitle: () => `Mokelay - ${copy.value.home.seoTitle}`,
   description: () => copy.value.home.seoDescription,
   ogDescription: () => copy.value.home.seoDescription,
 })
@@ -26,8 +26,6 @@ useSeoMeta({
         <PricingCards compact />
       </div>
     </section>
-
-    <FaqSection />
 
     <section class="section-tight">
       <div class="container final-cta">
