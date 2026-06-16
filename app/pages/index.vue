@@ -1,12 +1,52 @@
 <script setup lang="ts">
 const { copy } = useAppSettings()
+const config = useRuntimeConfig()
+
+const siteUrl = computed(() => config.public.siteUrl.replace(/\/$/, ''))
 
 useSeoMeta({
   title: () => copy.value.home.seoTitle,
   ogTitle: () => `Mokelay - ${copy.value.home.seoTitle}`,
   description: () => copy.value.home.seoDescription,
   ogDescription: () => copy.value.home.seoDescription,
+  keywords: () => copy.value.home.seoKeywords,
+  ogUrl: () => `${siteUrl.value}/`,
+  twitterTitle: () => copy.value.home.seoTitle,
+  twitterDescription: () => copy.value.home.seoDescription,
 })
+
+useHead(() => ({
+  script: [
+    {
+      key: 'software-application-json-ld',
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Mokelay',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Web, iOS, Android, WeChat Mini Program',
+        url: siteUrl.value,
+        description: copy.value.home.seoDescription,
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'CNY',
+          availability: 'https://schema.org/InStock',
+        },
+        featureList: [
+          '相比源码降低 66% 输出 token',
+          '降低模型要求',
+          '非研发友好',
+          '不依赖 IDE',
+          'Web、App、小程序三端同时生成',
+          '多语言友好',
+          '高度定制化和企业系统集成',
+        ],
+      }),
+    },
+  ],
+}))
 </script>
 
 <template>

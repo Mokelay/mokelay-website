@@ -4,6 +4,7 @@ const { copy } = useAppSettings()
 useSeoMeta({
   title: () => copy.value.auth.loginSeoTitle,
   description: () => copy.value.auth.loginSeoDescription,
+  robots: 'noindex, nofollow',
 })
 </script>
 

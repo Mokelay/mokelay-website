@@ -8,6 +8,27 @@ test('renders the marketing home page', async ({ page }) => {
   await expect(page.getByText('把生成成本和使用门槛一起降下来。')).toBeVisible()
 })
 
+test('exposes product SEO metadata and crawl files', async ({ page, request }) => {
+  await page.goto('/')
+
+  await expect(page).toHaveTitle(/Mokelay 低 token 三端应用生成平台/)
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /Mokelay/)
+  await expect(page.locator('meta[name="keywords"]')).toHaveAttribute('content', /三端应用生成/)
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/$/)
+
+  const structuredData = await page.locator('script[type="application/ld+json"]').allTextContents()
+  expect(structuredData.join('\n')).toContain('SoftwareApplication')
+  expect(structuredData.join('\n')).toContain('相比源码降低 66% 输出 token')
+
+  const robots = await request.get('/robots.txt')
+  await expect(robots).toBeOK()
+  expect(await robots.text()).toContain('Sitemap: https://www.mokelay.com/sitemap.xml')
+
+  const sitemap = await request.get('/sitemap.xml')
+  await expect(sitemap).toBeOK()
+  expect(await sitemap.text()).toContain('https://www.mokelay.com/pricing')
+})
+
 test('renders pricing plans', async ({ page }) => {
   await page.goto('/pricing')
 

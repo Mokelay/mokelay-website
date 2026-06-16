@@ -11,6 +11,7 @@ const { copy } = useAppSettings()
 useSeoMeta({
   title: () => copy.value.dashboard.seoTitle,
   description: () => copy.value.dashboard.seoDescription,
+  robots: 'noindex, nofollow',
 })
 
 async function logout() {

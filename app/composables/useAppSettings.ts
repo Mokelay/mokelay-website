@@ -38,8 +38,9 @@ const messages = {
       register: '注册',
     },
     home: {
-      seoTitle: '低 token 三端应用生成平台',
+      seoTitle: 'Mokelay 低 token 三端应用生成平台',
       seoDescription: 'Mokelay 通过低 token 结构化描述，降低模型要求和使用门槛，帮助团队同时生成 Web、App、小程序三端应用。',
+      seoKeywords: 'Mokelay,低 token 生成,AI 应用生成器,三端应用生成,Web 应用生成,App 生成,小程序生成,低模型要求,非研发友好,不依赖 IDE,多语言应用生成,企业系统集成',
       hero: {
         eyebrow: 'AI App Generator',
         title: '用更少 Token 生成三端应用。',
@@ -91,6 +92,7 @@ const messages = {
     pricing: {
       seoTitle: '价格方案',
       seoDescription: '查看 Mokelay 低 token 三端应用生成平台的 Free、Pro、Team 和 Enterprise 价格方案。',
+      seoKeywords: 'Mokelay 价格,AI 应用生成器价格,三端生成价格,低 token 生成价格,低代码平台价格,企业应用生成方案',
       eyebrow: 'Pricing',
       title: '按生成规模和集成深度选择。',
       body: '先用 Free 验证低 token 生成效果；当三端发布、多语言维护和企业集成成为日常，再升级到 Pro、Team 或 Enterprise。',
@@ -182,8 +184,9 @@ const messages = {
       register: 'Sign up',
     },
     home: {
-      seoTitle: 'Low-token multi-end app generator',
+      seoTitle: 'Mokelay low-token multi-end app generator',
       seoDescription: 'Mokelay lowers token usage, model requirements, and adoption friction while generating Web, app, and mini-program experiences from one structured description.',
+      seoKeywords: 'Mokelay,low-token AI app generator,multi-end app generator,Web app generator,app generator,mini-program generator,lower model requirements,non-developer friendly,no IDE,multilingual app generation,enterprise integration',
       hero: {
         eyebrow: 'AI App Generator',
         title: 'Generate three app surfaces with fewer tokens.',
@@ -235,6 +238,7 @@ const messages = {
     pricing: {
       seoTitle: 'Pricing',
       seoDescription: 'Explore Mokelay Free, Pro, Team, and Enterprise plans for low-token multi-end app generation.',
+      seoKeywords: 'Mokelay pricing,AI app generator pricing,multi-end app generation pricing,low-token generation pricing,low-code platform pricing,enterprise app generation',
       eyebrow: 'Pricing',
       title: 'Choose by generation scale and integration depth.',
       body: 'Start with Free to validate low-token generation. Upgrade to Pro, Team, or Enterprise when multi-end publishing, multilingual maintenance, and integrations become daily work.',
