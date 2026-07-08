@@ -43,9 +43,17 @@ const alternate = computed(() =>
     ? { text: copy.value.auth.form.noAccount, label: copy.value.auth.form.goRegister, to: '/register' }
     : { text: copy.value.auth.form.hasAccount, label: copy.value.auth.form.goLogin, to: '/login' },
 )
+const formRedirect = computed(() => (typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard'))
+const oauthErrorMessage = computed(() => {
+  const code = typeof route.query.oauth_error === 'string' ? route.query.oauth_error : ''
+  const errors = copy.value.auth.form.oauthErrors as Record<string, string>
+
+  return code ? errors[code] || copy.value.auth.form.fallbackError : ''
+})
 
 onMounted(() => {
   ready.value = true
+  errorMessage.value = oauthErrorMessage.value
 })
 
 async function submit() {
@@ -66,8 +74,7 @@ async function submit() {
 
     await refreshSession()
 
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard'
-    await router.push(redirect)
+    await router.push(formRedirect.value)
   } catch (error) {
     const requestError = error as RequestError
     errorMessage.value =
@@ -81,6 +88,10 @@ async function submit() {
     loading.value = false
   }
 }
+
+function startOAuth(provider: 'google' | 'github') {
+  window.location.href = authApi.oauthStartUrl(provider, formRedirect.value)
+}
 </script>
 
 <template>
@@ -89,6 +100,31 @@ async function submit() {
       <p class="eyebrow">{{ mode === 'login' ? 'Login' : 'Register' }}</p>
       <h2>{{ title }}</h2>
       <p class="subtitle">{{ subtitle }}</p>
+    </div>
+
+    <div class="oauth-actions">
+      <button
+        class="oauth-button"
+        type="button"
+        :disabled="loading || !ready"
+        @click="startOAuth('google')"
+      >
+        <span class="oauth-mark google-mark">G</span>
+        {{ copy.auth.form.googleSubmit }}
+      </button>
+      <button
+        class="oauth-button"
+        type="button"
+        :disabled="loading || !ready"
+        @click="startOAuth('github')"
+      >
+        <span class="oauth-mark github-mark">GH</span>
+        {{ copy.auth.form.githubSubmit }}
+      </button>
+    </div>
+
+    <div class="auth-divider">
+      <span>{{ copy.auth.form.oauthDivider }}</span>
     </div>
 
     <label v-if="mode === 'register'">
@@ -187,6 +223,65 @@ label {
   font-weight: 800;
 }
 
+.oauth-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.oauth-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 1px solid rgba(16, 35, 31, 0.16);
+  border-radius: 16px;
+  background: var(--surface-strong);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+  gap: 10px;
+  padding: 0 14px;
+}
+
+.oauth-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.google-mark {
+  background: #ffffff;
+  color: #1a73e8;
+}
+
+.github-mark {
+  background: #10231f;
+  color: #fffaf0;
+  font-size: 0.68rem;
+}
+
+.auth-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  height: 1px;
+  background: var(--line);
+  content: '';
+}
+
 input {
   width: 100%;
   border: 1px solid rgba(16, 35, 31, 0.18);
@@ -232,7 +327,8 @@ button:disabled {
   transform: none;
 }
 
-input:disabled {
+input:disabled,
+.oauth-button:disabled {
   cursor: wait;
   opacity: 0.68;
 }

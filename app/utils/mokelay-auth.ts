@@ -3,7 +3,22 @@ export const mokelayAuthApiEndpoints = {
   register: '/api/mokelay/register',
   login: '/api/mokelay/login',
   logout: '/api/mokelay/logout',
+  oauthGoogleStart: '/api/mokelay/oauth_google_start',
+  oauthGithubStart: '/api/mokelay/oauth_github_start',
 } as const
+
+export type OAuthProvider = 'google' | 'github'
+
+const oauthStartEndpoints: Record<OAuthProvider, string> = {
+  google: mokelayAuthApiEndpoints.oauthGoogleStart,
+  github: mokelayAuthApiEndpoints.oauthGithubStart,
+}
+
+export function oauthStartPath(provider: OAuthProvider, redirect = '/dashboard') {
+  const params = new URLSearchParams({ redirect })
+
+  return `${oauthStartEndpoints[provider]}?${params.toString()}`
+}
 
 export type PublicUser = {
   id: string

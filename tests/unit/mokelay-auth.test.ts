@@ -12,6 +12,8 @@ describe('Mokelay auth API helpers', () => {
       register: '/api/mokelay/register',
       login: '/api/mokelay/login',
       logout: '/api/mokelay/logout',
+      oauthGoogleStart: '/api/mokelay/oauth_google_start',
+      oauthGithubStart: '/api/mokelay/oauth_github_start',
     })
   })
 

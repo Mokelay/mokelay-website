@@ -1,11 +1,13 @@
 import {
   mokelayAuthApiEndpoints,
+  oauthStartPath,
   unwrapMokelayApiResponse,
   type AuthSessionData,
   type AuthUserData,
   type LogoutData,
   type MokelayApiResponse,
 } from '~/utils/mokelay-auth'
+import { normalizeApiBaseUrl } from '~/utils/api'
 
 type LoginPayload = {
   email: string
@@ -33,5 +35,7 @@ export function useMokelayAuthApi() {
     login: (body: LoginPayload) =>
       request<AuthUserData>(mokelayAuthApiEndpoints.login, { method: 'POST', body }),
     logout: () => request<LogoutData>(mokelayAuthApiEndpoints.logout, { method: 'POST' }),
+    oauthStartUrl: (provider: 'google' | 'github', redirect = '/dashboard') =>
+      `${normalizeApiBaseUrl(useRuntimeConfig().public.apiBaseUrl)}${oauthStartPath(provider, redirect)}`,
   }
 }
