@@ -109,7 +109,15 @@ function startOAuth(provider: 'google' | 'github') {
         :disabled="loading || !ready"
         @click="startOAuth('google')"
       >
-        <span class="oauth-mark google-mark">G</span>
+        <span class="oauth-mark gmail-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" focusable="false">
+            <path fill="#4285f4" d="M44 12.5v23c0 2.5-2 4.5-4.5 4.5H36V19.2l8-6.7Z" />
+            <path fill="#34a853" d="M4 12.5v23C4 38 6 40 8.5 40H12V19.2l-8-6.7Z" />
+            <path fill="#fbbc04" d="M36 12.5V40H12V12.5L24 21.7l12-9.2Z" />
+            <path fill="#ea4335" d="M4 12.5C4 9.4 7.6 7.7 10 9.6l14 10.8L38 9.6c2.4-1.9 6-.2 6 2.9L24 27.9 4 12.5Z" />
+            <path fill="#c5221f" d="M12 19.2v-6.7l12 9.2 12-9.2v6.7L24 28.4 12 19.2Z" />
+          </svg>
+        </span>
         {{ copy.auth.form.googleSubmit }}
       </button>
       <button
@@ -225,38 +233,50 @@ label {
 
 .oauth-actions {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .oauth-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  border: 1px solid rgba(16, 35, 31, 0.16);
-  border-radius: 16px;
+  min-height: 58px;
+  border: 1px solid rgba(16, 35, 31, 0.18);
+  border-radius: 8px;
   background: var(--surface-strong);
   color: var(--ink);
   cursor: pointer;
-  font-weight: 900;
-  gap: 10px;
-  padding: 0 14px;
+  font-size: 1.02rem;
+  font-weight: 850;
+  gap: 12px;
+  padding: 0 18px;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.oauth-button:hover:not(:disabled) {
+  border-color: rgba(16, 35, 31, 0.32);
+  box-shadow: 0 10px 28px rgba(16, 35, 31, 0.08);
+  transform: translateY(-1px);
 }
 
 .oauth-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
   font-size: 0.78rem;
   font-weight: 900;
 }
 
-.google-mark {
-  background: #ffffff;
-  color: #1a73e8;
+.gmail-mark svg {
+  display: block;
+  width: 30px;
+  height: 30px;
 }
 
 .github-mark {
