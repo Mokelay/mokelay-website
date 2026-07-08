@@ -13,6 +13,7 @@ type LoginPayload = {
 }
 
 type RegisterPayload = LoginPayload & {
+  enterprise_name: string
   name: string
 }
 

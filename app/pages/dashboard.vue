@@ -41,7 +41,7 @@ async function logout() {
         </article>
         <article class="card">
           <span>{{ copy.dashboard.cards[1][0] }}</span>
-          <h2>{{ copy.dashboard.workspaceTitle }}</h2>
+          <h2>{{ user?.enterprise_name || copy.dashboard.workspaceTitle }}</h2>
           <p>{{ copy.dashboard.cards[1][1] }}</p>
         </article>
         <article class="card">

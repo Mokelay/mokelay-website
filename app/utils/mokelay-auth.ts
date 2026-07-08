@@ -7,6 +7,8 @@ export const mokelayAuthApiEndpoints = {
 
 export type PublicUser = {
   id: string
+  enterprise_uuid: string
+  enterprise_name: string
   name: string
   email: string
   plan: string

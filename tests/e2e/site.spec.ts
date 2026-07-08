@@ -53,6 +53,7 @@ test('registers, opens dashboard, and logs out', async ({ page }) => {
   const email = `e2e-${Date.now()}@mokelay.test`
 
   await page.goto('/register')
+  await page.getByLabel('企业名称').fill('E2E Enterprise')
   await page.getByLabel('姓名').fill('E2E Builder')
   await page.getByLabel('邮箱').fill(email)
   await page.getByLabel('密码').fill('mokelay123')
@@ -60,6 +61,7 @@ test('registers, opens dashboard, and logs out', async ({ page }) => {
 
   await expect(page).toHaveURL(/\/dashboard/)
   await expect(page.getByRole('heading', { name: /欢迎，E2E Builder/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'E2E Enterprise' })).toBeVisible()
 
   await page.getByRole('button', { name: '退出登录' }).click()
   await expect(page).toHaveURL(/\/login/)

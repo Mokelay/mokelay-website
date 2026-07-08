@@ -10,6 +10,7 @@ const { fetch: refreshSession } = useAuthSession()
 const { copy } = useAppSettings()
 
 const form = reactive({
+  enterpriseName: '',
   name: '',
   email: '',
   password: '',
@@ -55,7 +56,12 @@ async function submit() {
     if (props.mode === 'login') {
       await authApi.login({ email: form.email, password: form.password })
     } else {
-      await authApi.register({ name: form.name, email: form.email, password: form.password })
+      await authApi.register({
+        enterprise_name: form.enterpriseName,
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      })
     }
 
     await refreshSession()
@@ -84,6 +90,18 @@ async function submit() {
       <h2>{{ title }}</h2>
       <p class="subtitle">{{ subtitle }}</p>
     </div>
+
+    <label v-if="mode === 'register'">
+      <span>{{ copy.auth.form.enterpriseName }}</span>
+      <input
+        v-model="form.enterpriseName"
+        name="enterprise_name"
+        autocomplete="organization"
+        placeholder="Mokelay"
+        :disabled="loading || !ready"
+        required
+      >
+    </label>
 
     <label v-if="mode === 'register'">
       <span>{{ copy.auth.form.name }}</span>
