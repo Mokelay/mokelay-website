@@ -43,6 +43,7 @@ export default defineNuxtConfig({
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
       productAppUrl: process.env.NUXT_PUBLIC_PRODUCT_APP_URL || '/dashboard',
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8787',
+      cloudflareWebAnalyticsToken: process.env.NUXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN || '',
     },
   },
   routeRules: {
