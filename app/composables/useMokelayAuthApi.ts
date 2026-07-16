@@ -35,7 +35,7 @@ export function useMokelayAuthApi() {
     login: (body: LoginPayload) =>
       request<AuthUserData>(mokelayAuthApiEndpoints.login, { method: 'POST', body }),
     logout: () => request<LogoutData>(mokelayAuthApiEndpoints.logout, { method: 'POST' }),
-    oauthStartUrl: (provider: 'google' | 'github', redirect = '/dashboard') =>
-      `${normalizeApiBaseUrl(useRuntimeConfig().public.apiBaseUrl)}${oauthStartPath(provider, redirect)}`,
+    oauthStartUrl: (provider: 'google' | 'github', redirect = '/dashboard', redirectOrigin?: string) =>
+      `${normalizeApiBaseUrl(useRuntimeConfig().public.apiBaseUrl)}${oauthStartPath(provider, redirect, redirectOrigin)}`,
   }
 }

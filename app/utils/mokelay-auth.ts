@@ -14,10 +14,41 @@ const oauthStartEndpoints: Record<OAuthProvider, string> = {
   github: mokelayAuthApiEndpoints.oauthGithubStart,
 }
 
-export function oauthStartPath(provider: OAuthProvider, redirect = '/dashboard') {
+export function oauthStartPath(provider: OAuthProvider, redirect = '/dashboard', redirectOrigin?: string) {
   const params = new URLSearchParams({ redirect })
+  if (redirectOrigin) {
+    params.set('redirect_origin', redirectOrigin)
+  }
 
   return `${oauthStartEndpoints[provider]}?${params.toString()}`
+}
+
+const allowedExternalRedirectOrigins = new Set([
+  'https://editor.mokelay.com',
+  'http://localhost:5173',
+])
+
+export function normalizeAuthRedirectPath(value: unknown, fallback = '/dashboard') {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//') || value.includes('\\')) {
+    return fallback
+  }
+  return value
+}
+
+export function resolveAuthRedirectTarget(redirect: unknown, redirectOrigin: unknown, currentOrigin: string) {
+  const path = normalizeAuthRedirectPath(redirect)
+  if (typeof redirectOrigin !== 'string' || !redirectOrigin.trim()) return path
+
+  try {
+    const origin = new URL(redirectOrigin).origin
+    if (origin === currentOrigin || allowedExternalRedirectOrigins.has(origin)) {
+      return `${origin}${path}`
+    }
+  } catch {
+    // Fall back to the website-local destination.
+  }
+
+  return path
 }
 
 export type PublicUser = {

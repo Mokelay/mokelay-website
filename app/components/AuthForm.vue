@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { normalizeAuthRedirectPath, resolveAuthRedirectTarget } from '~/utils/mokelay-auth'
+
 const props = defineProps<{
   mode: 'login' | 'register'
 }>()
@@ -43,7 +45,13 @@ const alternate = computed(() =>
     ? { text: copy.value.auth.form.noAccount, label: copy.value.auth.form.goRegister, to: '/register' }
     : { text: copy.value.auth.form.hasAccount, label: copy.value.auth.form.goLogin, to: '/login' },
 )
-const formRedirect = computed(() => (typeof route.query.redirect === 'string' ? route.query.redirect : '/dashboard'))
+const formRedirect = computed(() => normalizeAuthRedirectPath(route.query.redirect))
+const formRedirectOrigin = computed(() => (typeof route.query.redirect_origin === 'string' ? route.query.redirect_origin : undefined))
+const formRedirectTarget = computed(() => resolveAuthRedirectTarget(
+  formRedirect.value,
+  formRedirectOrigin.value,
+  window.location.origin,
+))
 const oauthErrorMessage = computed(() => {
   const code = typeof route.query.oauth_error === 'string' ? route.query.oauth_error : ''
   const errors = copy.value.auth.form.oauthErrors as Record<string, string>
@@ -74,7 +82,11 @@ async function submit() {
 
     await refreshSession()
 
-    await router.push(formRedirect.value)
+    if (formRedirectTarget.value.startsWith('/')) {
+      await router.push(formRedirect.value)
+    } else {
+      window.location.assign(formRedirectTarget.value)
+    }
   } catch (error) {
     const requestError = error as RequestError
     errorMessage.value =
@@ -90,7 +102,7 @@ async function submit() {
 }
 
 function startOAuth(provider: 'google' | 'github') {
-  window.location.href = authApi.oauthStartUrl(provider, formRedirect.value)
+  window.location.href = authApi.oauthStartUrl(provider, formRedirect.value, formRedirectOrigin.value)
 }
 </script>
 
